@@ -1,0 +1,52 @@
+erDiagram
+    USERS {
+        serial id PK
+        varchar email
+        varchar name
+        timestamp created_at
+    }
+
+    AUTHORS {
+        serial id PK
+        varchar name
+        text bio
+    }
+
+    GENRES {
+        serial id PK
+        varchar name
+        text description
+    }
+
+    BOOKS {
+        serial id PK
+        varchar title
+        varchar isbn
+        int author_id FK
+        int genre_id FK
+        int published_year
+        int total_copies
+    }
+
+    BORROWERS {
+        serial id PK
+        int user_id FK
+        varchar membership_number
+        varchar phone
+        varchar status
+    }
+
+    LOANS {
+        serial id PK
+        int book_id FK
+        int borrower_id FK
+        timestamp loan_date
+        timestamp due_date
+        timestamp returned_date
+    }
+
+    AUTHORS ||--o{ BOOKS : writes
+    GENRES ||--o{ BOOKS : categorizes
+    USERS ||--|| BORROWERS : identifies
+    BORROWERS ||--o{ LOANS : takes
+    BOOKS ||--o{ LOANS : includes
